@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Analytics\Period;
 use Analytics;
 use DateTime;
+use Carbon\Carbon;
 
 class CmsDashboardController extends Controller{
     public function index(){
@@ -25,12 +26,12 @@ class CmsDashboardController extends Controller{
     	$api = array();
     	$api['type'] = 'dashboard_data';
     	$api['msg'] = 'Success get data dashboard';
-		// $api['bounceRate'] = Analytics::performQuery($period, "ga:bounceRate")->rows;
-        // $api['avgSessionDuration'] = Analytics::performQuery($period, "ga:avgSessionDuration")->rows;
+		$api['bounceRate'] = Analytics::performQuery($period, "ga:bounceRate")->rows;
+        $api['avgSessionDuration'] = Analytics::performQuery($period, "ga:avgSessionDuration")->rows;
 		$api['browser'] = $this->dataBrowser($period);
-		// $api['country'] = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:country"))->rows;
-		// $api['city'] = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:city"))->rows;
-  //       $api['VisitorWebsite'] = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:date"))->rows;
+		$api['country'] = $this->dataCountry($period);
+		$api['city'] = $this->dataCity($period);
+        $api['dailyVisitor'] = $this->dataDailyVisitor($period);
 		// $api['MostVisitedPages'] = Analytics::fetchMostVisitedPages($period);
 		// $api['VisitorsAndPageViews'] = Analytics::fetchVisitorsAndPageViews($period);
         // $api['userVisited'] = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:userGender,ga:userAgeBracket"))->rows;
@@ -39,22 +40,62 @@ class CmsDashboardController extends Controller{
     }
 
     private function dataBrowser($period){
-    	return $rawdata = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:browser"))->rows;
-    	$data = array();
-    	$data['type'] = 'horizontalBar';
-    	$labels = array();
-    	$values = array();
-    	foreach ($rawdata as $list) {
-    		array_push($labels, $list[0]);
-    		array_push($values, $list[1]);
+    	$rawdata = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:browser"))->rows;
+    	$data = null;
+    	if ($rawdata) {
+	    	$data = array();
+	    	foreach($rawdata as $list) {
+	    		$send = array();
+	    		$send['label'] = $list[0];
+	    		$send['value'] = $list[1];
+	    		array_push($data, $send);
+	    	}
     	}
-    	$data['data']['labels'] = $labels;
-    	$datasets =  array();
-    	$datasets['label'] = 'Top Browsers';
-    	$datasets['data'] = $values;
-    	$datasets['backgroundColor'] = $this->getRandColor();
-    	$data['data']['datasets'] = $datasets;
+    	return $data;
+    }
 
+    private function dataCountry($period){
+    	$rawdata = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:country"))->rows;
+    	$data = null;
+    	if ($rawdata) {
+	    	$data = array();
+	    	foreach($rawdata as $list) {
+	    		$send = array();
+	    		$send['label'] = $list[0];
+	    		$send['value'] = $list[1];
+	    		array_push($data, $send);
+	    	}
+    	}
+    	return $data;
+    }
+
+    private function dataCity($period){
+    	$rawdata = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:city"))->rows;
+    	$data = null;
+    	if ($rawdata) {
+	    	$data = array();
+	    	foreach($rawdata as $list) {
+	    		$send = array();
+	    		$send['label'] = $list[0];
+	    		$send['value'] = $list[1];
+	    		array_push($data, $send);
+	    	}
+    	}
+    	return $data;
+    }
+
+    private function dataDailyVisitor($period){
+    	$rawdata = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:date"))->rows;
+    	$data = null;
+    	if ($rawdata) {
+	    	$data = array();
+	    	foreach($rawdata as $list) {
+	    		$send = array();
+	    		$send['label'] = Carbon::createFromFormat('Ymd',$list[0])->format('Y/m/d');
+	    		$send['value'] = $list[1];
+	    		array_push($data, $send);
+	    	}
+    	}
     	return $data;
     }
 

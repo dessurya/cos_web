@@ -27,7 +27,7 @@
 		</div>
 		<br>
 		<div class="row">
-			<div class="col-lg-6 col-xs-6">
+			<div id="bounceRate" class="col-lg-6 col-xs-6">
 				<div class="small-box bg-aqua">
 					<div class="inner">
 						<h3>- %</h3>
@@ -38,7 +38,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-6 col-xs-6">
+			<div id="avgSessionDuration" class="col-lg-6 col-xs-6">
 				<div class="small-box bg-aqua">
 					<div class="inner">
 						<h3>-</h3>
@@ -60,8 +60,8 @@
 						</div>
 					</div>
 					<div class="box-body">
-						<div class="chart">
-							<div id="canvasBrowser"></div>
+						<div class="chart canvasBrowser">
+							<canvas id="canvasBrowser"></canvas>
 						</div>
 					</div>
 				</div>
@@ -77,8 +77,8 @@
 						</div>
 					</div>
 					<div class="box-body">
-						<div class="chart">
-							<div id="canvasCountry"></div>
+						<div class="chart canvasCountry">
+							<canvas id="canvasCountry"></canvas>
 						</div>
 					</div>
 				</div>
@@ -94,8 +94,25 @@
 						</div>
 					</div>
 					<div class="box-body">
-						<div class="chart">
-							<div id="canvasCity"></div>
+						<div class="chart canvasCity">
+							<canvas id="canvasCity"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-12 col-xs-12">
+				<div id="dailyVisitor" class="box box-info">
+					<div class="box-header with-border">
+						<h3 class="box-title">Daily Visitor</h3>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+							<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+						</div>
+					</div>
+					<div class="box-body">
+						<div class="chart canvasDailyVisitor">
+							<canvas id="canvasDailyVisitor"></canvas>
 						</div>
 					</div>
 				</div>
@@ -106,8 +123,7 @@
 @endsection
 
 @section('js')
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<!-- <script type="text/javascript" src="{{ asset('asset/vendors/Chart.js/dist/Chart.js') }}"></script> -->
+	<script type="text/javascript" src="{{ asset('asset/vendors/Chart.js/dist/Chart.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('asset/adminlte/bower_components/moment/moment.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('asset/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 	<script type="text/javascript">
@@ -149,81 +165,165 @@
 			$('#daterange-btn span').html('Filter Date');
 		});
 
-		// var dataBrowserChart;
-
 		function dashboardReb(data) {
-			// console.log(data);
-			browserChart(data.browser);
+			$('#bounceRate h3').html('- %');
+			if (data.bounceRate != null) { $('#bounceRate h3').html(Math.ceil(data.bounceRate)+' %'); }
+
+			$('#avgSessionDuration h3').html('-');
+			if (data.avgSessionDuration != null) { $('#avgSessionDuration h3').html(timeConvert(Math.ceil(data.avgSessionDuration))); }
+
+			$('.chart.canvasBrowser').html('<canvas id="canvasBrowser"></canvas>');
+			if (data.browser != null) { browserChart(data.browser); }
+
+			$('.chart.canvasCountry').html('<canvas id="canvasCountry"></canvas>');
+			if (data.country != null) { countryChart(data.country); }
+
+			$('.chart.canvasCity').html('<canvas id="canvasCity"></canvas>');
+			if (data.city != null) { cityChart(data.city); }
+
+			$('.chart.canvasDailyVisitor').html('<canvas id="canvasDailyVisitor"></canvas>');
+			if (data.dailyVisitor != null) { dailyVisitorChart(data.dailyVisitor); }
 		}
 
-		// function browserChart(config) {
-		// 	console.log(config);
+		function browserChart(res) {
+			var label = new Array();
+			var value = new Array();
 
-		// 	$('#canvasBrowser').replaceWith('<canvas id="canvasBrowser"></canvas>');
-		// 	var canBro = document.getElementById("canvasBrowser");
-		// 	// var canvasBrowser = new Chart(canBro, config);
-		// 	// var canvasBrowser = new Chart(canBro, {
-		// 	// 	type: "horizontalBar",
-		// 	// 	data: {
-		// 	// 		labels: ["Chrome", "Edge", "Firefox"],
-		// 	// 		datasets: {
-		// 	// 			data: eval([8, 1, 2])
-		// 	// 		}
-		// 	// 	}
-		// 	// });
-		// 	var canvasBrowser = new Chart(canBro, {
-	 //            type: 'horizontalBar',
-	 //            data: {
-	 //              labels: ['Chrome', 'Edge', 'Firefox'],
-	 //              datasets: [
-	 //                  {
-	 //                    label: "Chrome",
-	 //                    data: eval([8, 0, 0]),
-	 //                    backgroundColor : "rgba(255,0,0,.5)"
-	 //                  },
-	 //                  {
-	 //                    label: "Edge",
-	 //                    data: eval([0, 1, 0]),
-	 //                    backgroundColor : "rgba(255,50,0,.5)"
-	 //                  },
-	 //                  {
-	 //                    label: "Firefox",
-	 //                    data: eval([0, 0, 2]),
-	 //                    backgroundColor : "rgba(255,0,55,.5)"
-	 //                  }
-	 //                ]
-	 //            }
-	 //        });
-	 //    }
-	 	google.load('visualization', '1.0', {
-		  'packages': ['corechart']
-		});
+			res.forEach(function(data){
+				label.push(data.label);
+				value.push(data.value);
+			});
 
-		// creates and populates a data table,
-		// instantiates the pie chart, passes in the data and
-		// draws it.
-		function browserChart(fetching_data) {
-		  console.log(fetching_data);
-		  // Create the data table.
-		  var data = new google.visualization.DataTable();
-		  data.addColumn('string', 'Browser');
-		  data.addColumn('number', 'Session');
-		  data.addRows([
-		    JSON.stringify(fetching_data)
-		  ]);
-
-		  // Set chart options
-		  var options = {
-		    'width': 400,
-		    'height': 300
-		  };
-
-		  // Instantiate and draw our chart, passing in some options.
-		  var chart = new google.visualization.PieChart(document.getElementById('canvasBrowser'));
-		  chart.draw(data, options);
-		  
-		  var chart2 = new google.visualization.BarChart(document.getElementById('canvasCountry'));
-		  chart2.draw(data, options);
+			var ctx = document.getElementById("canvasBrowser").getContext('2d');
+			var chartBrowser = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: label,
+					datasets:[{
+						label: 'Top Browser',
+						data: value,
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero:true
+							}
+						}]
+					}
+				}
+			});
 		}
+
+		function countryChart(res) {
+			var label = new Array();
+			var value = new Array();
+
+			res.forEach(function(data){
+				label.push(data.label);
+				value.push(data.value);
+			});
+
+			var ctx = document.getElementById("canvasCountry").getContext('2d');
+			var chartCountry = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: label,
+					datasets:[{
+						label: 'Country Visitors',
+						data: value,
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero:true
+							}
+						}]
+					}
+				}
+			});
+		}
+
+		function cityChart(res) {
+			var label = new Array();
+			var value = new Array();
+
+			res.forEach(function(data){
+				label.push(data.label);
+				value.push(data.value);
+			});
+
+			var ctx = document.getElementById("canvasCity").getContext('2d');
+			var chartCity = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: label,
+					datasets:[{
+						label: 'City Visitors',
+						data: value,
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero:true
+							}
+						}]
+					}
+				}
+			});
+		}
+
+		function dailyVisitorChart(res) {
+			var label = new Array();
+			var value = new Array();
+
+			res.forEach(function(data){
+				label.push(data.label);
+				value.push(data.value);
+			});
+
+			var ctx = document.getElementById("canvasDailyVisitor").getContext('2d');
+			var chartDailyVisitor = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: label,
+					datasets:[{
+						label: 'Daily Visitors',
+						data: value,
+						borderWidth: 1
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero:true
+							}
+						}]
+					}
+				}
+			});
+		}
+
+		function timeConvert(time) {
+			var sec_num = parseInt(time, 10); // don't forget the second param
+			var hours   = Math.floor(sec_num / 3600);
+			var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+			var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+			if (hours   < 10) {hours   = "0"+hours;}
+			if (minutes < 10) {minutes = "0"+minutes;}
+			if (seconds < 10) {seconds = "0"+seconds;}
+			return hours+':'+minutes+':'+seconds;
+		}
+
 	</script>
 @endsection      
