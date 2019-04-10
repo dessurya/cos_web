@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "kopinfra-dashboard",
+  "private_key_id": "8b25ea39e492f7f351ce5213abbef2f8e71c4f7c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCfieHB9XIb7c9+\nk4tVHvKY73pP0djUwxtmDMkgaevffwaTTkxgTx0nle0mgeIW1u5gqEJXT1OvcgVY\nmMoUh8m388ejprZzqR03V7zaUpLCOoV1ROcwb/rov2F3Pv9vu2yfLQxZOUkEYJoh\nDltTN2KhWKsCpkd7cDzpxGnWtRUijuG5Fw5wzgrt8wF6N501in91/h0JLa890l8V\nFP2qi+UKsqwCFeerhJhBU7RQI9SEHwfraQRVuPCHCeFLP+2e/fnHp+RkU/ru4MK2\nhk0xzNLB2z6wRRsRFdthcwr5ZpeCSQ2UWJpIgtcNVbjiOVbbiUNxufXA7gWUZIeb\nKt8w/RvXAgMBAAECggEAARvVIIF+q1nsksd0DUSaGdCz3H+33bDyeTPrBT3oulSW\nTiKT54rF+OG3i13YbJtOHPAWy3Z91cx34/KdNwESrEJWMLmCzeaKSCEPXugAbehp\nHOIeAzGpvs24KP4cZZ/jCdDR7OMx0KO1/Ppkx0YzhjOTkpMeEGP/vtkzMCV9l0cM\nKcu25coQ+iS/k+eIXoAqcleRqDQc7xy8vq4SXIYIfJdqBb7TcDVcB+Ii7MnQu4Pa\nlTjsq9xvgLSbRdW3/paN8BxrebxmZEsmCoZ3C94PSpeHp/yzOQHBdk130xYtTzqp\ndzMcqt6otOVcDxeHBJSXVODOmc9bpKT048C4yGqkeQKBgQDNE6rHueSWfIoy5nse\nkiVyZ2Pbup6f/z0ymFbXRo0WMp+yWnUx/eoZiWYg6wzkZgEgoXr4W82y/YMd66qx\nYr+l9um6SDzgHAOR9anlagnwXNWCZ6ZqiV4XCbvzImBFWRBZwnejjmdxyTIJXHgH\nwj8wAY10oOgMZpG8x86mRitkaQKBgQDHJ3BbOm6LYjavMFVjCZtBGTFmtLSPqOuF\nD6fKb+zXrG9YqddDCPKlog9ogUyhq0+DFsNgDBYTNVcvohmv9UYMTFwPVjpxplR/\nX5dWJ9gFL10zMaDwvru+5zfihNAqX4Ssngsq50qRNhO0g8eJhWbDv1J/JUQK3qlX\nBtyR/u92PwKBgQCcQv0hfLr6E+F2EXsE+1U/TBqh5hxSS7lE4SFinaaJoH9g9l5Q\nfmqvlKtWL+Q98J+xTnoV3lXpqhQLa3Q//7+KZY8I21xPY+kwgaE4Zsk19nbWC8aZ\nbRxdr5QgGjSDAu9bhbuFy890u1q+GVB4kQF2wegYUzcdo9Yuo40J03Pi6QKBgGWT\n/R/a7tVTE9dJTNQF61VJ10OuecYof3BP6uI7Mk9TGTvc7Pm5D6JhxYAlKwPuz9Bq\nBN7xazUC6ORXxshTzxWowO/lqEudbc3F4PfFvM3wOZZKAu+oKTSW1I9J9K8YJyCw\nP7vzWro0HdrduCGxlBfVdut5A3qT1UWZL1mb8WGbAoGATn6Cb2IVASk4/dleQGd4\nyarm1mtSKbJNC/esry30K+95EP1YLpUCbTlNFGv6Wrf8kbRCsu/F2T9NPxBUZ2L5\nFMN9SEOR3tohyEzRFqpFATUnUvKt97SSMw42WzPIBvxPx4e0RaQgkhZhqNrdVArf\nURDOO74URxWtwxKdv0Id6nY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "kopin-dashboard-view@kopinfra-dashboard.iam.gserviceaccount.com",
+  "client_id": "104453563383961074669",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/kopin-dashboard-view%40kopinfra-dashboard.iam.gserviceaccount.com"
+}
