@@ -32,9 +32,9 @@ class CmsDashboardController extends Controller{
 		$api['country'] = $this->dataCountry($period);
 		$api['city'] = $this->dataCity($period);
         $api['dailyVisitor'] = $this->dataDailyVisitor($period);
-		// $api['MostVisitedPages'] = Analytics::fetchMostVisitedPages($period);
-		// $api['VisitorsAndPageViews'] = Analytics::fetchVisitorsAndPageViews($period);
-        // $api['userVisited'] = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:userGender,ga:userAgeBracket"))->rows;
+		$api['MostVisitedPages'] = Analytics::fetchMostVisitedPages($period);
+		$api['VisitorsAndPageViews'] = Analytics::fetchVisitorsAndPageViews($period);
+        $api['userVisited'] = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:userGender,ga:userAgeBracket"))->rows;
 
 		return response()->json($api);
     }
