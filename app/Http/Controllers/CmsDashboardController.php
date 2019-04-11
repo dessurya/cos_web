@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Analytics\Period;
 use Analytics;
 use DateTime;
+use URL;
 use Carbon\Carbon;
 
 class CmsDashboardController extends Controller{
@@ -32,9 +33,10 @@ class CmsDashboardController extends Controller{
 		$api['country'] = $this->dataCountry($period);
 		$api['city'] = $this->dataCity($period);
         $api['dailyVisitor'] = $this->dataDailyVisitor($period);
-		$api['MostVisitedPages'] = Analytics::fetchMostVisitedPages($period);
-		$api['VisitorsAndPageViews'] = Analytics::fetchVisitorsAndPageViews($period);
-        $api['userVisited'] = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:userGender,ga:userAgeBracket"))->rows;
+		$api['visitedPages'] = $this->dataVisitedPages($period);
+		
+		// $api['dailyVisitAndView'] = $this->dataDailyVisitAndView($period);
+  //       $api['userVisited'] = Analytics::performQuery($period, "ga:users", array("dimensions" => "ga:userGender,ga:userAgeBracket"))->rows;
 
 		return response()->json($api);
     }
@@ -93,6 +95,40 @@ class CmsDashboardController extends Controller{
 	    		$send = array();
 	    		$send['label'] = Carbon::createFromFormat('Ymd',$list[0])->format('Y/m/d');
 	    		$send['value'] = $list[1];
+	    		array_push($data, $send);
+	    	}
+    	}
+    	return $data;
+    }
+
+    private function dataVisitedPages($period){
+    	$rawdata =Analytics::fetchMostVisitedPages($period);
+    	$data = null;
+    	if ($rawdata) {
+	    	$data = array();
+	    	foreach($rawdata as $list) {
+	    		$send = array();
+	    		$send['url'] = URL::to($list['url']);
+	    		$send['label'] = $list['pageTitle'];
+	    		$send['value'] = $list['pageViews'];
+	    		array_push($data, $send);
+	    	}
+    	}
+    	return $data;
+    }
+
+    private function dataDailyVisitAndView($period){
+    	$rawdata = Analytics::fetchVisitorsAndPageViews($period);
+    	$data = null;
+    	if ($rawdata) {
+	    	$data = array();
+	    	foreach($rawdata as $list) {
+	    		$send = array();
+	    		// $send['date'] = Carbon::createFromFormat('Ymd',$list['date'])->format('Y/m/d');
+	    		$send['date'] = $list['date'];
+	    		$send['page'] = $list['pageTitle'];
+	    		$send['visitors'] = $list['visitors'];
+	    		$send['pageViews'] = $list['pageViews'];
 	    		array_push($data, $send);
 	    	}
     	}

@@ -38,6 +38,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div id="avgSessionDuration" class="col-lg-6 col-xs-6">
 				<div class="small-box bg-aqua">
 					<div class="inner">
@@ -117,6 +118,23 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="col-lg-12 col-xs-12">
+				<div id="dailyVisitor" class="box box-info">
+					<div class="box-header with-border">
+						<h3 class="box-title">Visited Pages</h3>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+							<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+						</div>
+					</div>
+					<div class="box-body">
+						<div class="chart canvasVisitedPages">
+							<canvas id="canvasVisitedPages"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
 			
 		</div>
 	</section>
@@ -128,8 +146,8 @@
 	<script type="text/javascript" src="{{ asset('asset/adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 	<script type="text/javascript">
 		$('#daterange-btn').daterangepicker({
-				startDate: moment().subtract(29, 'days'),
-				endDate  : moment(),
+				startDate: '01/01/2019',
+				endDate  : '01/01/2019',
 				minDate: '01/01/2019',
 				showDropdowns: true,
 				showWeekNumbers: true,
@@ -183,6 +201,9 @@
 
 			$('.chart.canvasDailyVisitor').html('<canvas id="canvasDailyVisitor"></canvas>');
 			if (data.dailyVisitor != null) { dailyVisitorChart(data.dailyVisitor); }
+
+			$('.chart.canvasVisitedPages').html('<canvas id="canvasVisitedPages"></canvas>');
+			if (data.visitedPages != null) { visitedPagesChart(data.visitedPages); }
 		}
 
 		function browserChart(res) {
@@ -202,7 +223,9 @@
 					datasets:[{
 						label: 'Top Browser',
 						data: value,
-						borderWidth: 1
+						borderWidth: 1,
+						backgroundColor: 'rgb(0, 192, 239)',
+						borderColor: 'rgb(0, 163, 203)'
 					}]
 				},
 				options: {
@@ -234,7 +257,9 @@
 					datasets:[{
 						label: 'Country Visitors',
 						data: value,
-						borderWidth: 1
+						borderWidth: 1,
+						backgroundColor: 'rgb(0, 192, 239)',
+						borderColor: 'rgb(0, 163, 203)'
 					}]
 				},
 				options: {
@@ -266,7 +291,9 @@
 					datasets:[{
 						label: 'City Visitors',
 						data: value,
-						borderWidth: 1
+						borderWidth: 1,
+						backgroundColor: 'rgb(0, 192, 239)',
+						borderColor: 'rgb(0, 163, 203)'
 					}]
 				},
 				options: {
@@ -298,7 +325,43 @@
 					datasets:[{
 						label: 'Daily Visitors',
 						data: value,
-						borderWidth: 1
+						borderWidth: 1,
+						backgroundColor: 'rgb(0, 192, 239)',
+						borderColor: 'rgb(0, 163, 203)'
+					}]
+				},
+				options: {
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero:true
+							}
+						}]
+					}
+				}
+			});
+		}
+
+		function visitedPagesChart(res) {
+			var label = new Array();
+			var value = new Array();
+
+			res.forEach(function(data){
+				label.push(data.label);
+				value.push(data.value);
+			});
+
+			var ctx = document.getElementById("canvasVisitedPages").getContext('2d');
+			var chartVisitedPages = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: label,
+					datasets:[{
+						label: 'Visited Pages',
+						data: value,
+						borderWidth: 1,
+						backgroundColor: 'rgb(0, 192, 239)',
+						borderColor: 'rgb(0, 163, 203)'
 					}]
 				},
 				options: {
