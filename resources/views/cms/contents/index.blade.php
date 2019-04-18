@@ -1,7 +1,7 @@
 @extends('cms.master')
 
 @section('title')
-  <title>CMS - Accounts List</title>
+  <title>CMS - {{ Str::title(str_replace('_', ' ', $index)) }}</title>
 @endsection
 
 @section('css')
@@ -11,7 +11,7 @@
 
 @section('content')
 	<section class="content-header">
-		<h1>Accounts <small>List</small></h1>
+		<h1>{{ Str::title(str_replace('_', ' ', $index)) }} <small>List</small></h1>
 	</section>
 
 	<section class="content">
@@ -88,6 +88,9 @@
 	<script src="{{ asset('asset/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 
 	<script type="text/javascript" src="{{ asset('asset/js/datatables_call.js') }}"></script>
+	@if (in_array($index, array('news')))
+	<script src="{{asset('asset/adminlte/bower_components/ckeditor/ckeditor.js')}}"></script>
+	@endif
 
 	<script type="text/javascript">
 		var confDtTable = {};

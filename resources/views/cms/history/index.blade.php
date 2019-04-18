@@ -50,13 +50,7 @@
 								<tr role="row">
 									@foreach($config['table'] as $list)
 									@if($list['search'] == 'true')
-									<th>
-										<input 
-											name="{{ $list['name'] }}"
-											type="text" 
-											class="search form-control input-sm" 
-											placeholder="{{ $list['label'] }}" />
-									</th>
+									<th class="search">{{ $list['label'] }}</th>
 									@else
 									<th></th>
 									@endif

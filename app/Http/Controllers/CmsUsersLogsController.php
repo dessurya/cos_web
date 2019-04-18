@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 // use App\Model\Users;
 use App\Model\UsersLogs;
+use App\Model\VusersLogs;
 
 use Auth;
 use DataTables;
@@ -25,9 +26,9 @@ class CmsUsersLogsController extends Controller{
 	    	$config['table'][1]['search'] = 'true';
 	    	$config['table'][1]['orderable'] = 'true';
 	    	$config['table'][2]['label'] = 'Account';
-	    	$config['table'][2]['name'] = 'get_users.name';
+	    	$config['table'][2]['name'] = 'name';
 	    	$config['table'][2]['search'] = 'true';
-	    	$config['table'][2]['orderable'] = 'false';
+	    	$config['table'][2]['orderable'] = 'true';
 	    	$config['table'][3]['label'] = 'Logs';
 	    	$config['table'][3]['name'] = 'logs';
 	    	$config['table'][3]['search'] = 'true';
@@ -39,20 +40,7 @@ class CmsUsersLogsController extends Controller{
     }
 
     public function callData(request $req){
-		$data = UsersLogs::with(['getUsers']);
-		if (isset($req->post)) {
-			foreach ($req->post as $key => $val) {
-				if ($key == 'get_users.name') {
-					$data->whereHas('getUsers', function($query)use($val){
-						$query->where('name', 'like', '%'.$val.'%');
-					});
-				}else{
-					$data->where($key, 'like', '%'.$val.'%');
-				}
-			}
-		}
-		$data->get();
-
+		$data = VusersLogs::get();
 		return Datatables::of($data)->escapeColumns(['*'])->make(true);
     }
 }

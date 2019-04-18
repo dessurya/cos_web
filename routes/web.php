@@ -80,5 +80,14 @@ Route::prefix('cms')->name('cms.')->group(function(){
 				->name('data');
 		});
 
+		Route::prefix('content')->name('content.')->group(function(){
+			Route::get('{index}', 'CmsContentsController@index')
+				->name('index');
+			Route::post('{index}/callData', 'CmsContentsController@callData')
+				->name('data');
+			Route::post('{index}/tools', 'CmsContentsController@tools')
+				->name('tools');
+		});
+
 	});
 });

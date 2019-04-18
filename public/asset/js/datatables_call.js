@@ -2,6 +2,20 @@ var datatable;
 $(document).on('click', 'table#table-data tbody tr', function(){
 	$(this).toggleClass('selected');
 });
+$(document).on('click', 'table#table-data tbody tr td a.pict', function(){
+	$(this).parent().toggleClass('selected');
+	var pict = $(this).attr('href');
+	var load = $('#loading-page img').attr('src');
+	$('#loading-page img').attr('src', pict);
+	$('#loading-page').addClass('pict').attr('title', 'Click any ware to close').show();
+	$('#loading-page .cel').append('<span><div class="alert alert-info" style="width:400px; margin:10px auto 0;"><h4>Click any ware to close</h4></div><span>');
+	$(document).on('click', '#loading-page', function(){
+		$('#loading-page img').attr('src', load);
+		$('#loading-page').removeClass('pict').attr('title', '').hide();
+		$('#loading-page .cel span').remove();
+	});
+	return false;
+});
 $(document).on('click', '#action #DtTabFilter', function() {
 	$('table#table-data tfoot').toggleClass('hide');
 });
@@ -17,7 +31,8 @@ $(document).on('click', '#action .tools', function(){
 	var conf = $(this).data('conf');
 	var val = $(this).data('val');
 	var sel = $(this).data('sel');
-	var id = getDataId(sel);
+	var mulsel = $(this).data('mulsel');
+	var id = getDataId(sel, mulsel);
 	if(id == false){ return false; }
 	var data = {};
 	if(conf == true){
@@ -59,16 +74,21 @@ $(document).on('submit', 'form#storeData', function(){
 	return false;
 });
 
-$(document).on('change', 'table#table-data tfoot input.search', function (keypress){
-	confDtTable['reBuild'] = true;
-	var post = {};
-	$('table#table-data tfoot input.search').each(function(){
-		if($(this).val() !== '' && $(this).val() !== null && $(this).val() !== undefined){
-			post[$(this).attr('name')] = $(this).val();
-		}
-	});
-	confDtTable['dataPost']['post'] = post;
-	callDataTabless(confDtTable);
+$(document).on('change', 'input[type = file]', function(e){
+    var files = e.originalEvent.target.files;
+    var size = 0;
+    for (var i=0, len=files.length; i<len; i++){
+        size = files[i].size;
+    }
+    // 5000000 - 5mb
+    if(size > 5000000){
+        $("input[type = file]").val('');
+        var inf = {};
+		inf['title'] = 'Error';
+		inf['type'] = 'error';
+		inf['text'] = 'File size exceeds 5MB!';
+		pnotify(inf);
+    }
 });
 
 function callDataTabless(setConf) {
@@ -99,6 +119,22 @@ function callDataTabless(setConf) {
 		},
 		aaSorting: [ [setConf.fieldSort,'desc'] ],
 		columns: setConf.ConfigColumns,
+		initComplete: function () {
+			var api = this.api();
+	        api.columns().every(function () {
+	            var column = this;
+	            if ($(column.footer()).hasClass('search')) {
+	                var input = $('<input type="text" class="search form-control input-sm" placeholder="Search '+$(column.footer()).text()+'" />');
+	                input.appendTo( $(column.footer()).empty() ).on('change', function (keypress) {
+	                    if (column.search() !== this.value) {
+	                        // var val = $.fn.dataTable.util.escapeRegex($(this).val());
+	                        var val = this.value;
+	                        column.search(val ? val : '', true, false).draw();
+	                    }
+	                });
+	            }
+	        });
+	    },
 		rowCallback: function(row, data, iDisplayIndex) {
 			var info = this.fnPagingInfo();
 			var page = info.iPage;
@@ -110,19 +146,25 @@ function callDataTabless(setConf) {
 	});
 }
 
-function getDataId(data){
-	if(data == false){ return true; }
+function getDataId(select, multiselect){
+	if(select == false){ return true; }
 	var idData = "";
 	$('table#table-data tbody tr.selected').each(function(){
 		idData += $(this).attr('id')+'^';
 	});
 	var getLength = idData.length-1;
 	idData = idData.substr(0, getLength);
+	var pndata = {};
 	if(idData === null || idData === '' || idData === undefined){
-		var pndata = {};
 		pndata['title'] = 'Info';
 		pndata['type'] = 'error';
 		pndata['text'] = 'No Data Selected!';
+		pnotify(pndata);
+		return false;
+	}else if(multiselect == false && idData.indexOf('^') > -1){
+		pndata['title'] = 'Info';
+		pndata['type'] = 'error';
+		pndata['text'] = 'Only can select one data!';
 		pnotify(pndata);
 		return false;
 	}

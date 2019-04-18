@@ -69,6 +69,9 @@ function excuteResponse(data) {
 	}else if(data.type == 'form'){
 		$('.content-wrapper section.content .tab-content #Open').html(data.result.view);
 		$('.content-wrapper section.content .nav-tabs a[href="#Open"] small').html(data.result.title);
+		if (data.result.ckeditor !== null && data.result.ckeditor !== undefined && data.result.ckeditor !== '' && data.result.ckeditor == true) {
+			CKEDITOR.replace('content');
+		}
 	}else if(data.type == 'store'){
 		if (data.response == false) {
 			$.each(data.result.error, function(key, value) {

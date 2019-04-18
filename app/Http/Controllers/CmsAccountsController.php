@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Model\Users;
+use App\Model\Vusers;
 
 use Auth;
 use DataTables;
@@ -48,27 +49,32 @@ class CmsAccountsController extends Controller{
 		    $config['tools'][0]['label'] = 'Add';
 		    $config['tools'][0]['action'] = 'form';
 		    $config['tools'][0]['value'] = '';
-		    $config['tools'][0]['selected'] = 'false';
+            $config['tools'][0]['selected'] = 'false';
+		    $config['tools'][0]['multiselect'] = 'false';
 		    $config['tools'][0]['confirm'] = 'false';
 		    $config['tools'][1]['label'] = 'Reset Password';
 		    $config['tools'][1]['action'] = 'reset_password';
 		    $config['tools'][1]['value'] = '';
 		    $config['tools'][1]['selected'] = 'true';
+            $config['tools'][1]['multiselect'] = 'true';
 		    $config['tools'][1]['confirm'] = 'true';
 		    $config['tools'][2]['label'] = 'Activated';
 		    $config['tools'][2]['action'] = 'activated';
 		    $config['tools'][2]['value'] = 'Y';
 		    $config['tools'][2]['selected'] = 'true';
+            $config['tools'][2]['multiselect'] = 'true';
 		    $config['tools'][2]['confirm'] = 'true';
 		    $config['tools'][3]['label'] = 'Non Activated';
 		    $config['tools'][3]['action'] = 'activated';
 		    $config['tools'][3]['value'] = 'N';
 		    $config['tools'][3]['selected'] = 'true';
+            $config['tools'][3]['multiselect'] = 'true';
 		    $config['tools'][3]['confirm'] = 'true';
 		    $config['tools'][4]['label'] = 'Delete';
 		    $config['tools'][4]['action'] = 'delete';
 		    $config['tools'][4]['value'] = '';
 		    $config['tools'][4]['selected'] = 'true';
+            $config['tools'][4]['multiselect'] = 'true';
 		    $config['tools'][4]['confirm'] = 'true';
 	    // tools config
 	    $config['tools_ajaxUrl'] = route('cms.account.tools');
@@ -77,33 +83,8 @@ class CmsAccountsController extends Controller{
 
     public function callData(request $req){
     	$id = Auth::user()->id;
-		$data = Users::whereNotIn('id',[$id]);
-		if (isset($req->post)) {
-			foreach ($req->post as $key => $val) {
-				if ($key == 'flag_active') {
-					if (strtoupper($val) == 'ACTIVE') {
-						$find = 'Y';
-					}else if (strtoupper($val) == 'NON ACTIVE'){
-						$find = 'N';
-					}else{
-						$find = 'A';
-					}
-				}else{
-					$find = $val;
-				}
-				$data->where($key, 'like', '%'.$find.'%');
-			}
-		}
-		$data->get();
-
-		return Datatables::of($data)->editColumn('flag_active', function ($data){
-				$html = '';
-				if($data->flag_active == 'Y'){
-					return "Active";
-				} else if($data->flag_active == 'N'){
-					return "Non Active";
-				}
-			})->escapeColumns(['*'])->make(true);
+		$data = Vusers::whereNotIn('id',[$id])->get();
+		return Datatables::of($data)->escapeColumns(['*'])->make(true);
     }
 
     public function tools(request $req){
@@ -118,7 +99,7 @@ class CmsAccountsController extends Controller{
     		$res['result'] = $this->callForm($inp);
     	}else if($act == 'store') {
     		$res['result'] = $this->storeForm($inp);
-    		$res['msg'] = "Success to store data";
+    		$res['msg'] = "Success to store data ".$req->input('name');
     		if ($res['result']['response'] == true) {
 	    		$res['refresh_tab'] = true;
     		}else{
