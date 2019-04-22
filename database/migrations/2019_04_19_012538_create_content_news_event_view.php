@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContentBannerView extends Migration
+class CreateContentNewsEventView extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateContentBannerView extends Migration
      */
     public function up()
     {
-        DB::statement("CREATE OR REPLACE VIEW vcos_content_banner AS (
+        DB::statement("CREATE OR REPLACE VIEW vcos_content_news_event AS (
                 SELECT 
                     cont.id AS id,
                     users_id,
@@ -26,7 +26,7 @@ class CreateContentBannerView extends Migration
                         ELSE 'Non Active'
                     END AS flag_active,
                     cont.created_at AS created_at
-                FROM dcos_content_banner cont
+                FROM dcos_content_news_event cont
                 LEFT JOIN dcos_users user ON cont.users_id = user.id
             )
         ");

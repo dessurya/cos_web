@@ -181,6 +181,9 @@ return [
         // Yajra DtTatble
         Yajra\Datatables\DatatablesServiceProvider::class,
 
+        // Intervention Image
+        Intervention\Image\ImageServiceProvider::class,
+
         // my helper
         App\Providers\Helper\MyHelperAsd::class,
     ],
@@ -236,6 +239,7 @@ return [
 
         'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Image' => Intervention\Image\Facades\Image::class,
         'MyHelperAsd' => App\Helper\MyHelperAsd::class,
     ],
 

@@ -38,9 +38,8 @@
               <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ route('cms.content.index', ['index' => 'banner']) }}">
-                <i class="fa fa-circle-o"></i> Banner
-              </a></li>
+              <li><a href="{{ route('cms.content.index', ['index' => 'banner']) }}"><i class="fa fa-circle-o"></i> Banner</a></li>
+              <li><a href="{{ route('cms.content.index', ['index' => 'news-event']) }}"><i class="fa fa-circle-o"></i> News & Event</a></li>
             </ul>
           </li>
         </ul>

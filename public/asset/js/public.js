@@ -69,7 +69,7 @@ function excuteResponse(data) {
 	}else if(data.type == 'form'){
 		$('.content-wrapper section.content .tab-content #Open').html(data.result.view);
 		$('.content-wrapper section.content .nav-tabs a[href="#Open"] small').html(data.result.title);
-		if (data.result.ckeditor !== null && data.result.ckeditor !== undefined && data.result.ckeditor !== '' && data.result.ckeditor == true) {
+		if (data.result.ckeditor !== null && data.result.ckeditor !== undefined && data.result.ckeditor !== '' && data.result.ckeditor === true) {
 			CKEDITOR.replace('content');
 		}
 	}else if(data.type == 'store'){
@@ -85,6 +85,9 @@ function excuteResponse(data) {
 			if (data.result.newform == true) {
 				$('.content-wrapper section.content .tab-content #Open').html(data.result.form.view);
 				$('.content-wrapper section.content .nav-tabs a[href="#Open"] small').html(data.result.form.title);
+				if (data.result.form.ckeditor !== null && data.result.form.ckeditor !== undefined && data.result.form.ckeditor !== '' && data.result.form.ckeditor === true) {
+					CKEDITOR.replace('content');
+				}
 			}
 		}
 	}else if(data.type == 'profile_store') {
@@ -98,6 +101,8 @@ function excuteResponse(data) {
 				pnotify(inf);
 			});
 		}
+	}else if(data.type == 'delete-galeri'){
+		$('#Open ul#galeri li.'+data.result.id).remove();
 	}else if(data.type == 'dashboard_data'){
 		dashboardReb(data);
 	}

@@ -18,9 +18,12 @@ class MyHelperAsd {
 	}
 
 	public static function getConfigContents($index){
+		if (!in_array($index, array('banner', 'news-event'))){
+			return false;
+		}
 		$config = array();
     	// datatable config
-    		if ($index == 'banner') {
+    		if (in_array($index, array('banner', 'news-event'))) {
 		    	$config['table'][0]['label'] = 'No';
 		    	$config['table'][0]['name'] = 'id';
 		    	$config['table'][0]['search'] = 'false';
@@ -49,7 +52,7 @@ class MyHelperAsd {
     		}
     	// datatable config
 	    // tools config
-		    if (in_array($index, array('banner'))) {
+		    if (in_array($index, array('banner', 'news-event'))) {
 			    $config['tools'][0]['label'] = 'Add';
 			    $config['tools'][0]['action'] = 'form';
 			    $config['tools'][0]['value'] = '';
@@ -103,7 +106,7 @@ class MyHelperAsd {
 			$id = $store->id;
 		}
 
-		if ($index = 'banner') {
+		if ($index == 'banner') {
 			if (isset($id)) {
 				$validator = Validator::make($data, [
 					'title' => 'required|max:175',
@@ -116,6 +119,20 @@ class MyHelperAsd {
 					'title' => 'required|max:175',
 					'url' => 'nullable|max:175',
 					'content' => 'nullable|max:175',
+					'picture' => 'required|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			}
+		} else if ($index == 'news-event') {
+			if (isset($id)) {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175',
+					'content' => 'required',
+					'picture' => 'nullable|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			} else {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175',
+					'content' => 'required',
 					'picture' => 'required|image|mimes:jpeg,jpg,png|max:6500',
 				], $message);
 			}
@@ -172,6 +189,9 @@ class MyHelperAsd {
 					$addmsg = $store->title.' to '.$data['title'];
 				}
 				$store->title = $data['title'];
+				if (in_array('slug', $columns)) {
+					$store->slug = Str::slug($data['title'], '-');
+				}
 			}
 
 			if (isset($data['name']) and in_array('name', $columns)) {
@@ -182,7 +202,7 @@ class MyHelperAsd {
 				}
 				$store->name = $data['name'];
 				if (in_array('slug', $columns)) {
-					$save->slug = str_slug($data['name']);
+					$store->slug = Str::slug($data['name'], '-');
 				}
 			}
 

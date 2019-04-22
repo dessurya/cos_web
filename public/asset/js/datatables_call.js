@@ -2,8 +2,10 @@ var datatable;
 $(document).on('click', 'table#table-data tbody tr', function(){
 	$(this).toggleClass('selected');
 });
-$(document).on('click', 'table#table-data tbody tr td a.pict', function(){
-	$(this).parent().toggleClass('selected');
+$(document).on('click', 'table#table-data tbody tr td a.pict, #Open #storeData code a, #Open #galeri a.view', function(){
+	if ($(this).hasClass('pict')) {
+		$(this).parent().toggleClass('selected');
+	}
 	var pict = $(this).attr('href');
 	var load = $('#loading-page img').attr('src');
 	$('#loading-page img').attr('src', pict);
@@ -25,8 +27,7 @@ $(document).on('click', '#action #dtSelectedAll', function(){
 $(document).on('click', '#action #dtUnselectedAll', function(){
 	$('table#table-data tbody tr').removeClass('selected');
 });
-
-$(document).on('click', '#action .tools', function(){
+$(document).on('click', 'ul#action .tools, button#action.tools, #Open #galeri a.tools', function(){
 	var action = $(this).data('action');
 	var conf = $(this).data('conf');
 	var val = $(this).data('val');
@@ -59,7 +60,6 @@ $(document).on('click', '#action .tools', function(){
 	if(action == 'form'){ $('.content-wrapper section.content .nav-tabs a[href="#Open"]').tab('show'); }
 	return false;
 });
-
 $(document).on('submit', 'form#storeData', function(){
 	var url   = $(this).attr('action');
 	var input  = new FormData($(this)[0]);
@@ -73,7 +73,9 @@ $(document).on('submit', 'form#storeData', function(){
 	pnotifyConfirm(data);
 	return false;
 });
-
+$(document).on('click', '#Open button#add-galeri', function(){
+	$('form#my-dropzone input[name=id]').val($(this).data('id'));
+});
 $(document).on('change', 'input[type = file]', function(e){
     var files = e.originalEvent.target.files;
     var size = 0;

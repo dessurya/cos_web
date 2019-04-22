@@ -13,7 +13,7 @@ class CreateUsersView extends Migration
      */
     public function up()
     {
-        DB::statement("CREATE VIEW vcos_users AS (
+        DB::statement("CREATE OR REPLACE VIEW vcos_users AS (
                 SELECT 
                     id,
                     name,

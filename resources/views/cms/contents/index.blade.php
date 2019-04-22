@@ -1,17 +1,18 @@
 @extends('cms.master')
 
 @section('title')
-  <title>CMS - {{ Str::title(str_replace('_', ' ', $index)) }}</title>
+  <title>CMS - {{ Str::title(str_replace('-', ' ', $index)) }}</title>
 @endsection
 
 @section('css')
 	<link rel="stylesheet" type="text/css" href="{{ asset('asset/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('asset/css/datatables_call.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('asset/vendors/dropzone/dist/dropzone.css') }}">
 @endsection
 
 @section('content')
 	<section class="content-header">
-		<h1>{{ Str::title(str_replace('_', ' ', $index)) }} <small>List</small></h1>
+		<h1>{{ Str::title(str_replace('-', ' ', $index)) }} <small>List</small></h1>
 	</section>
 
 	<section class="content">
@@ -28,13 +29,13 @@
 				<div class="active tab-pane" id="List">
 					<div style="position: relative; width: 100%;">
 						<div style="position: absolute; right: 0;">
-							<div id="action" class="btn-group">
+							<div class="btn-group">
 								<button type="button" class="btn btn-info"><i class="fa fa-wrench"></i> Tools</button>
 								<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 									<span class="caret"></span>
 									<span class="sr-only">Toggle Dropdown</span>
 								</button>
-								<ul class="dropdown-menu" role="menu">
+								<ul id="action" class="dropdown-menu" role="menu">
 									<li id="DtTabFilter">Filter</li>
 									<li id="dtSelectedAll">Selected All</li>
 									<li id="dtUnselectedAll">Unselected All</li>
@@ -81,6 +82,33 @@
 			</div>
 		</div>
 	</section>
+
+	<div class="modal fade" id="modal-addpict">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Add Galeri Picture</h4>
+				</div>
+				<div class="modal-body">
+					<form 
+						action="{{ $config['tools_ajaxUrl'] }}"
+						method="post" 
+						enctype="multipart/form-data" 
+						class="dropzone" 
+						id="my-dropzone"
+						style="overflow-y: auto; max-height: 450px;">
+						<input type="hidden" name="index" value="{{ $index }}">
+						<input type="hidden" name="action" value="add-galeri">
+						<input type="hidden" name="id" value="">
+						{{ csrf_field() }}
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
 
 @section('js')
@@ -88,9 +116,39 @@
 	<script src="{{ asset('asset/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 
 	<script type="text/javascript" src="{{ asset('asset/js/datatables_call.js') }}"></script>
-	@if (in_array($index, array('news')))
+	@if (in_array($index, array('news-event')))
 	<script src="{{asset('asset/adminlte/bower_components/ckeditor/ckeditor.js')}}"></script>
 	@endif
+	<script src="{{ asset('asset/vendors/dropzone/dist/dropzone.js') }}"></script>
+	<script type="text/javascript">
+		Dropzone.options.myDropzone = {
+			maxFilesize  : 5, // 5 mb
+			timeout: 5000,
+			autoProcessQueue: true,
+			acceptedFiles: ".jpeg,.jpg,.png",
+			init: function(){
+				var _this = this;
+				$(document).on("click","#Open button#add-galeri.btn.btn-primary", function() {
+					_this.removeAllFiles();
+				});
+			},
+			error: function(file, response){
+				console.log(file);
+				console.log(response);
+				window.setTimeout(function() {
+					$(file.previewElement).remove();
+				}, 500);
+			},
+			success: function(file, response){
+				var pndata = {};
+				pndata['title'] = 'Info';
+				pndata['type'] = 'success';
+				pndata['text'] = response.msg;
+				pnotify(pndata);
+				$('#Open ul#galeri').prepend(response.result.add);
+			}
+		}
+	</script>
 
 	<script type="text/javascript">
 		var confDtTable = {};
