@@ -1,0 +1,154 @@
+/* banner */
+	#banner{
+		position: relative;
+		width: 100%;
+	}
+	#banner .item{
+		position: relative;
+		width: 100%;
+	}
+	#banner .item #img{
+		position: relative;
+		width: 100%;
+		height: 680px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	#banner .item #img #wrapper{
+		position: absolute;
+		width: 350px;
+		bottom: 120px;
+		right: 125px;
+
+		color: white;
+	}
+
+	#banner .item #img #wrapper h1{
+		color: white;
+		margin-bottom: 25px;
+	}
+
+	#banner .item #img #wrapper #link{
+		margin-top: 10px;
+	}
+
+	#banner .item #img #wrapper #link a.links{
+		text-decoration: unset;
+		padding: 3px 15px;
+		border-radius: 12px;
+		color: white;
+		border: 1.2px solid rgb(135, 206, 236);
+		background-color: rgb(135, 206, 236);
+		transition: all .52s;
+	}
+
+	#banner .item #img #wrapper #link a.links:hover{
+		color: rgb(135, 206, 236);
+		border: 1.2px solid rgb(135, 206, 236);
+		background-color: white;
+	}
+
+	#banner .owl-controls{
+		position: relative;
+		bottom: 60px;
+	}
+	#banner .owl-controls .owl-page.active span{
+		background: rgb(135, 206, 236);
+	}
+	#banner .owl-controls .owl-page span{
+		margin: 5px;
+		background: rgb(255, 255, 255);
+	}
+/* banner */
+
+/* politics */
+	#politics #lists .list{
+		position: relative;
+		width: 100%;
+		height: 360px;
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		margin-bottom: 40px;
+		/*box-shadow: 0px 10px 10px rgb(230,230,230);*/
+	}
+
+	#politics #lists .list:nth-child(odd){
+		box-shadow: 5px 5px 10px rgb(230,230,230);
+	}
+
+	#politics #lists .list:nth-child(even){
+		box-shadow: -5px -5px 10px rgb(230,230,230);
+	}
+
+	#politics #lists .list .content{
+		position: absolute;
+		width: 45%;
+		padding: 10px 20px;
+		background-color: white;
+	}
+
+	#politics #lists .list:nth-child(odd) .content{
+		border-bottom: 1px solid rgb(220, 220, 220);
+		border-right: 1px solid rgb(220, 220, 220);
+		bottom: 0;
+		right: 0;
+	}
+
+	#politics #lists .list:nth-child(even) .content{
+		border-top: 1px solid rgb(220, 220, 220);
+		border-left: 1px solid rgb(220, 220, 220);
+		top: 0;
+		left: 0;
+	}
+
+	#politics #lists .list .content h2,
+	#politics #lists .list .content p{
+		margin-bottom: 10px;
+	}
+
+	#politics #lists .list .content a{
+		color: rgb(135, 206, 236);
+		text-decoration: unset;
+	}
+/* politics */
+
+/* newsevent */
+	#newsevent #lists{
+		position: relative;
+		width: 100%;
+	}
+	#newsevent #lists .list{
+		position: relative;
+	    display: inline-grid;
+	    width: 31%;
+		margin: 0px .5%;
+		margin-bottom: 40px;
+	}
+
+	#newsevent #lists .list .img{
+		position: relative;
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		width: 260px;
+		height: 260px;
+		border-radius: 100%;
+		margin: 0 auto;
+		margin-bottom: 15px;
+	}	
+	#newsevent #lists .list .content{
+		position: relative;
+		width: 100%;
+	}
+	#newsevent #lists .list h2{
+		margin-bottom: 10px;
+	}
+
+	#newsevent #lists .list a{
+		color: rgb(135, 206, 236);
+		text-decoration: unset;
+	}
+/* newsevent */

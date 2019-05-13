@@ -18,12 +18,12 @@ class MyHelperAsd {
 	}
 
 	public static function getConfigContents($index){
-		if (!in_array($index, array('banner', 'news-event'))){
+		if (!in_array($index, array('banner', 'type', 'main', 'circle', 'news-event', 'politics', 'service', 'page'))){
 			return false;
 		}
 		$config = array();
     	// datatable config
-    		if (in_array($index, array('banner', 'news-event'))) {
+    		if (in_array($index, array('banner', 'news-event', 'service'))) {
 		    	$config['table'][0]['label'] = 'No';
 		    	$config['table'][0]['name'] = 'id';
 		    	$config['table'][0]['search'] = 'false';
@@ -49,10 +49,88 @@ class MyHelperAsd {
 		    	$config['table'][5]['search'] = 'false';
 		    	$config['table'][5]['orderable'] = 'false';
 			    $config['table_fieldSort'] = 3;
+    		} else if (in_array($index, array('type'))) {
+		    	$config['table'][0]['label'] = 'No';
+		    	$config['table'][0]['name'] = 'id';
+		    	$config['table'][0]['search'] = 'false';
+		    	$config['table'][0]['orderable'] = 'true';
+		    	$config['table'][1]['label'] = 'Status';
+		    	$config['table'][1]['name'] = 'flag_active';
+		    	$config['table'][1]['search'] = 'true';
+		    	$config['table'][1]['orderable'] = 'true';
+		    	$config['table'][2]['label'] = 'Created By';
+		    	$config['table'][2]['name'] = 'name';
+		    	$config['table'][2]['search'] = 'true';
+		    	$config['table'][2]['orderable'] = 'true';
+		    	$config['table'][3]['label'] = 'Created At';
+		    	$config['table'][3]['name'] = 'created_at';
+		    	$config['table'][3]['search'] = 'true';
+		    	$config['table'][3]['orderable'] = 'true';
+		    	$config['table'][4]['label'] = 'Title';
+		    	$config['table'][4]['name'] = 'title';
+		    	$config['table'][4]['search'] = 'true';
+		    	$config['table'][4]['orderable'] = 'true';
+		    	$config['table'][5]['label'] = 'type';
+		    	$config['table'][5]['name'] = 'type';
+		    	$config['table'][5]['search'] = 'true';
+		    	$config['table'][5]['orderable'] = 'true';
+		    	$config['table'][6]['label'] = 'picture';
+		    	$config['table'][6]['name'] = 'picture';
+		    	$config['table'][6]['search'] = 'false';
+		    	$config['table'][6]['orderable'] = 'false';
+			    $config['table_fieldSort'] = 3;
+    		} else if (in_array($index, array('circle', 'politics'))) {
+		    	$config['table'][0]['label'] = 'No';
+		    	$config['table'][0]['name'] = 'id';
+		    	$config['table'][0]['search'] = 'false';
+		    	$config['table'][0]['orderable'] = 'true';
+		    	$config['table'][1]['label'] = 'Status';
+		    	$config['table'][1]['name'] = 'flag_active';
+		    	$config['table'][1]['search'] = 'true';
+		    	$config['table'][1]['orderable'] = 'true';
+		    	$config['table'][2]['label'] = 'Created By';
+		    	$config['table'][2]['name'] = 'name';
+		    	$config['table'][2]['search'] = 'true';
+		    	$config['table'][2]['orderable'] = 'true';
+		    	$config['table'][3]['label'] = 'Created At';
+		    	$config['table'][3]['name'] = 'created_at';
+		    	$config['table'][3]['search'] = 'true';
+		    	$config['table'][3]['orderable'] = 'true';
+		    	$config['table'][4]['label'] = 'Title';
+		    	$config['table'][4]['name'] = 'title';
+		    	$config['table'][4]['search'] = 'true';
+		    	$config['table'][4]['orderable'] = 'true';
+		    	$config['table'][5]['label'] = 'subject';
+		    	$config['table'][5]['name'] = 'subject';
+		    	$config['table'][5]['search'] = 'true';
+		    	$config['table'][5]['orderable'] = 'true';
+		    	$config['table'][6]['label'] = 'picture';
+		    	$config['table'][6]['name'] = 'picture';
+		    	$config['table'][6]['search'] = 'false';
+		    	$config['table'][6]['orderable'] = 'false';
+			    $config['table_fieldSort'] = 3;
+    		} else if (in_array($index, array('page'))) {
+		    	$config['table'][0]['label'] = 'No';
+		    	$config['table'][0]['name'] = 'id';
+		    	$config['table'][0]['search'] = 'false';
+		    	$config['table'][0]['orderable'] = 'true';
+		    	$config['table'][1]['label'] = 'Status';
+		    	$config['table'][1]['name'] = 'flag_active';
+		    	$config['table'][1]['search'] = 'true';
+		    	$config['table'][1]['orderable'] = 'true';
+		    	$config['table'][2]['label'] = 'Title';
+		    	$config['table'][2]['name'] = 'title';
+		    	$config['table'][2]['search'] = 'true';
+		    	$config['table'][2]['orderable'] = 'true';
+		    	$config['table'][3]['label'] = 'picture';
+		    	$config['table'][3]['name'] = 'picture';
+		    	$config['table'][3]['search'] = 'false';
+		    	$config['table'][3]['orderable'] = 'false';
+			    $config['table_fieldSort'] = 3;
     		}
     	// datatable config
 	    // tools config
-		    if (in_array($index, array('banner', 'news-event'))) {
+		    if (in_array($index, array('banner', 'type', 'main', 'circle', 'news-event', 'politics', 'service'))) {
 			    $config['tools'][0]['label'] = 'Add';
 			    $config['tools'][0]['action'] = 'form';
 			    $config['tools'][0]['value'] = '';
@@ -83,6 +161,25 @@ class MyHelperAsd {
 			    $config['tools'][4]['selected'] = 'true';
 	            $config['tools'][4]['multiselect'] = 'true';
 			    $config['tools'][4]['confirm'] = 'true';
+		    } else if (in_array($index, array('page'))) {
+			    $config['tools'][0]['label'] = 'Update';
+			    $config['tools'][0]['action'] = 'form';
+			    $config['tools'][0]['value'] = '';
+	            $config['tools'][0]['selected'] = 'true';
+			    $config['tools'][0]['multiselect'] = 'false';
+			    $config['tools'][0]['confirm'] = 'false';
+			    $config['tools'][1]['label'] = 'Activated';
+			    $config['tools'][1]['action'] = 'activated';
+			    $config['tools'][1]['value'] = 'Y';
+			    $config['tools'][1]['selected'] = 'true';
+	            $config['tools'][1]['multiselect'] = 'true';
+			    $config['tools'][1]['confirm'] = 'true';
+			    $config['tools'][2]['label'] = 'Non Activated';
+			    $config['tools'][2]['action'] = 'activated';
+			    $config['tools'][2]['value'] = 'N';
+			    $config['tools'][2]['selected'] = 'true';
+	            $config['tools'][2]['multiselect'] = 'true';
+			    $config['tools'][2]['confirm'] = 'true';
 		    }
 	    // tools config
 	    $config['tools_ajaxUrl'] = route('cms.content.tools', ['index' => $index]);
@@ -106,7 +203,15 @@ class MyHelperAsd {
 			$id = $store->id;
 		}
 
-		if ($index == 'banner') {
+		if ($index == 'page') {
+			if (isset($id)) {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175',
+					'content' => 'nullable',
+					'picture' => 'nullable|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			}
+		} else if ($index == 'banner') {
 			if (isset($id)) {
 				$validator = Validator::make($data, [
 					'title' => 'required|max:175',
@@ -122,16 +227,94 @@ class MyHelperAsd {
 					'picture' => 'required|image|mimes:jpeg,jpg,png|max:6500',
 				], $message);
 			}
-		} else if ($index == 'news-event') {
+		} else if ($index == 'type') {
 			if (isset($id)) {
 				$validator = Validator::make($data, [
-					'title' => 'required|max:175',
+					'title' => 'required|max:175|unique:dcos_content_type,title,'.$id,
+					'content' => 'required',
+					'type' => 'required',
+					'picture' => 'nullable|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			} else {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175|unique:dcos_content_type,title',
+					'content' => 'required',
+					'type' => 'required',
+					'picture' => 'required|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			}
+		} else if ($index == 'main') {
+			if (isset($id)) {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175|unique:dcos_content_main_theme,title,'.$id,
+					'content' => 'required',
+					'type_id' => 'required',
+					'picture' => 'nullable|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			} else {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175|unique:dcos_content_main_theme,title',
+					'content' => 'required',
+					'type_id' => 'required',
+					'picture' => 'required|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			}
+		} else if ($index == 'circle') {
+			if (isset($id)) {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175|unique:dcos_content_circle,title,'.$id,
+					'subject' => 'required|max:175',
 					'content' => 'required',
 					'picture' => 'nullable|image|mimes:jpeg,jpg,png|max:6500',
 				], $message);
 			} else {
 				$validator = Validator::make($data, [
-					'title' => 'required|max:175',
+					'title' => 'required|max:175|unique:dcos_content_circle,title',
+					'subject' => 'required|max:175',
+					'content' => 'required',
+					'picture' => 'required|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			}
+		} else if ($index == 'service') {
+			if (isset($id)) {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175|unique:dcos_content_service,title,'.$id,
+					'content' => 'required',
+					'picture' => 'nullable|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			} else {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175|unique:dcos_content_service,title',
+					'content' => 'required',
+					'picture' => 'required|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			}
+		} else if ($index == 'politics') {
+			if (isset($id)) {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175|unique:dcos_content_politics,title,'.$id,
+					'subject' => 'required|max:175',
+					'content' => 'required',
+					'picture' => 'nullable|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			} else {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175|unique:dcos_content_politics,title',
+					'subject' => 'required|max:175',
+					'content' => 'required',
+					'picture' => 'required|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			}
+		} else if ($index == 'news-event') {
+			if (isset($id)) {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175|unique:dcos_content_news_event,title,'.$id,
+					'content' => 'required',
+					'picture' => 'nullable|image|mimes:jpeg,jpg,png|max:6500',
+				], $message);
+			} else {
+				$validator = Validator::make($data, [
+					'title' => 'required|max:175|unique:dcos_content_news_event,title',
 					'content' => 'required',
 					'picture' => 'required|image|mimes:jpeg,jpg,png|max:6500',
 				], $message);
@@ -178,6 +361,14 @@ class MyHelperAsd {
 				$store->url = $data['url'];
 			}
 
+			if (isset($data['type']) and in_array('type', $columns)) {
+				$store->type = $data['type'];
+			}
+
+			if (isset($data['type_id']) and in_array('type_id', $columns)) {
+				$store->type_id = $data['type_id'];
+			}
+
 			if (isset($data['content']) and in_array('content', $columns)) {
 				$store->content = $data['content'];
 			}
@@ -194,6 +385,10 @@ class MyHelperAsd {
 				}
 			}
 
+			if (isset($data['subject']) and in_array('subject', $columns)) {
+				$store->subject = $data['subject'];
+			}
+
 			if (isset($data['name']) and in_array('name', $columns)) {
 				if ($id == null or $store->name == $data['name']) {
 					$addmsg = $data['name'];
@@ -206,7 +401,10 @@ class MyHelperAsd {
 				}
 			}
 
-			$store->users_id = Auth::user()->id;
+			if ($index != 'page') {
+				$store->users_id = Auth::user()->id;
+			}
+
 			$store->save();
 
 			if(isset($data['picture']) and in_array('picture', $columns)){

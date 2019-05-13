@@ -23,9 +23,9 @@ class CmsContentsController extends Controller{
     }
 
     public function callData($index, request $req){
-    	$Model = "App\Model\Vcontent".Str::studly($index);
+		$Model = "App\Model\Vcontent".Str::studly($index);
 		$data = $Model::get();
-    	if (in_array($index, array('banner', 'news-event'))) {
+    	if (in_array($index, array('banner', 'type', 'main', 'circle', 'news-event', 'politics', 'service', 'page'))) {
 			return Datatables::of($data)->editColumn('picture', function($data) use($index){
 					return '<a class="pict" href="'.asset('asset/picture/'.$index.'/'.$data->id.'/'.$data->picture).'">'.$data->picture.'</a>';
 				})
@@ -93,7 +93,7 @@ class CmsContentsController extends Controller{
 		$res['title'] = $titl;
     	$res['view'] = view('cms.contents._'.$index, compact('titl', 'find', 'index'))->render();
 
-    	if (in_array($index, array('news-event'))) {
+    	if (in_array($index, array('type', 'main', 'circle', 'news-event', 'politics', 'service', 'page'))) {
     		$res['ckeditor'] = true;
     	}
     	return $res;
@@ -126,11 +126,7 @@ class CmsContentsController extends Controller{
     		$store = $Model::find($list);
     		$store->flag_active = $data['val'];
     		$store->save();
-    		if (in_array($index, array('banner'))) {
-	    		$res['msg'] .= $store->title.', ';
-    		}else{
-    			$res['msg'] .= $store->name.', ';
-    		}
+    		$res['msg'] .= $store->title.', ';
     	}
     	$res['msg'] = substr($res['msg'], 0, -2);
     	return $res;
@@ -141,24 +137,33 @@ class CmsContentsController extends Controller{
     	$res['msg'] = 'Success, delete : ';
     	$ids = explode('^', $data['id']);
     	foreach ($ids as $list) {
-    		if (in_array($index, array('news-event'))) {
+    		if (in_array($index, array('news-event', 'main', 'circle', 'politics', 'service'))) {
     			ContentGaleri::where('index', $index)->where('id_foreign', $list)->delete();
     		}
+    			// ContentGaleri::where('index', $index)->where('id_foreign', $list)->delete();	
     		$Model = "App\Model\Content".Str::studly($index);
     		$store = $Model::find($list);
+    		if ($index == 'type') {
+    			$Mdel = "App\Model\Content".Str::studly($store->type);
+    			$Ddel = $Mdel::where('type_id', $store->id)->get();
+    			foreach ($Ddel as $Dlist) {
+    				ContentGaleri::where('index', $store->type)->where('id_foreign', $Dlist->id)->delete();
+    				$Dfind = $Mdel::find($Dlist->id);
+    				$columns=$Dfind->getTableColumns(); // memanggil semua column/field pada table
+		    		if(in_array('picture', $columns)){
+		    			$directory = public_path().'/asset/picture/'.Str::studly($store->type).'/'.$Dfind->id;
+						File::deleteDirectory($directory);
+		    		}
+		    		$store->delete();		
+    			}
+    		}
     		$columns=$store->getTableColumns(); // memanggil semua column/field pada table
     		if(in_array('picture', $columns)){
     			$directory = public_path().'/asset/picture/'.$index.'/'.$store->id;
-    			if ($store->picture != null) {
-					File::deleteDirectory($directory);
-				}
+				File::deleteDirectory($directory);
     		}
     		$store->delete();
-    		if (in_array($index, array('banner'))) {
-	    		$res['msg'] .= $store->title.', ';
-    		}else{
-    			$res['msg'] .= $store->name.', ';
-    		}
+    		$res['msg'] .= $store->title.', ';
     	}
     	$res['msg'] = substr($res['msg'], 0, -2);
     	return $res;

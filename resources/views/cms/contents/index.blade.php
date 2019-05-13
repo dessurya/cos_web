@@ -116,10 +116,9 @@
 	<script src="{{ asset('asset/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 
 	<script type="text/javascript" src="{{ asset('asset/js/datatables_call.js') }}"></script>
-	@if (in_array($index, array('news-event')))
 	<script src="{{asset('asset/adminlte/bower_components/ckeditor/ckeditor.js')}}"></script>
-	@endif
 	<script src="{{ asset('asset/vendors/dropzone/dist/dropzone.js') }}"></script>
+	
 	<script type="text/javascript">
 		Dropzone.options.myDropzone = {
 			maxFilesize  : 5, // 5 mb

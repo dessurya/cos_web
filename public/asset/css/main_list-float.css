@@ -1,0 +1,91 @@
+#list-float{
+	position: relative;
+	width: 100%;
+}
+#list-float .item{
+	position: relative;
+	width: 100%;
+}
+#list-float .item .flot{
+	width: 50%;
+	height: 420px;
+}
+
+#list-float .item .flot .tab,
+#list-float .item .flot .tab .row,
+#list-float .item .flot .tab .row .col{
+	width: 100%;
+}
+
+#list-float .item .flot,
+#list-float .item .flot.img #pict,
+#list-float .item .flot .tab,
+#list-float .item .flot .tab .row,
+#list-float .item .flot .tab .row .col{
+	vertical-align: middle;
+	height: 480px;
+}
+
+#list-float .item .flot.img #pict #absen,
+#list-float .item .flot.content .tab .row .col div{
+	height: 250px;
+}
+
+#list-float .item .flot.img #pict #absen,
+#list-float .item .flot.content .tab .row .col div{
+	padding: 40px 60px;
+	background-color: rgba(135, 206, 236, .4);
+}
+
+#list-float .item .flot.img #pict{
+	width: 100%;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+#list-float .item .flot p{
+	margin-bottom: 15px;
+}
+
+#list-float .item .flot a.links{
+	text-decoration: unset;
+	padding: 3px 15px;
+	border-radius: 12px;
+	color: white;
+	border: 1.2px solid rgb(135, 206, 236);
+	background-color: rgb(135, 206, 236);
+	transition: all .52s;
+}
+
+#list-float .item .flot a.links:hover{
+	color: rgb(135, 206, 236);
+	border: 1.2px solid rgb(135, 206, 236);
+	background-color: rgba(0,0,0,0);
+}
+
+#list-float .item:nth-child(odd) .flot:nth-child(1){
+	float: left;
+}
+#list-float .item:nth-child(odd) .flot:nth-child(2){
+	float: right;
+}
+#list-float .item:nth-child(even) .flot:nth-child(1){
+	float: right;
+}
+#list-float .item:nth-child(even) .flot:nth-child(2){
+	float: left;
+}
+
+#list-float .item:nth-child(odd) .flot.img #pict #absen{
+	float: right;
+}
+#list-float .item:nth-child(even) .flot.img #pict #absen{
+	float: left;
+}
+
+#ajax.boxs span{
+	padding: 5px 12px;
+	color: rgb(135, 206, 236);
+	border: 1.2px solid rgb(135, 206, 236);
+}

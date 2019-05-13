@@ -38,8 +38,14 @@
               <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
             </a>
             <ul class="treeview-menu">
+              <li><a href="{{ route('cms.content.index', ['index' => 'page']) }}"><i class="fa fa-circle-o"></i> Page</a></li>
               <li><a href="{{ route('cms.content.index', ['index' => 'banner']) }}"><i class="fa fa-circle-o"></i> Banner</a></li>
-              <li><a href="{{ route('cms.content.index', ['index' => 'news-event']) }}"><i class="fa fa-circle-o"></i> News & Event</a></li>
+              <!-- <li><a href="{{ route('cms.content.index', ['index' => 'service']) }}"><i class="fa fa-circle-o"></i> Service</a></li> -->
+              <li><a href="{{ route('cms.content.index', ['index' => 'politics']) }}"><i class="fa fa-circle-o"></i>SDG And Politics</a></li>
+              <!-- <li><a href="{{ route('cms.content.index', ['index' => 'news-event']) }}"><i class="fa fa-circle-o"></i> News Event</a></li> -->
+              <!-- <li><a href="{{ route('cms.content.index', ['index' => 'type']) }}"><i class="fa fa-circle-o"></i> Type</a></li> -->
+              <!-- <li><a href="{{ route('cms.content.index', ['index' => 'main']) }}"><i class="fa fa-circle-o"></i> Main</a></li> -->
+              <li><a href="{{ route('cms.content.index', ['index' => 'circle']) }}"><i class="fa fa-circle-o"></i> Circle</a></li>
             </ul>
           </li>
         </ul>

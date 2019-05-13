@@ -11,8 +11,38 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::name('main.')->group(function(){
+	Route::get('/', 'FrontendController@home')
+		->name('home');
+
+	Route::get('/circle', 'FrontendController@circle')
+		->name('circle');
+	Route::get('/circle/{slug}', 'FrontendController@circleShow')
+		->name('circle.show');
+	Route::post('/circle/calldata', 'FrontendController@circleData')
+		->name('circle.data');
+
+	Route::get('/news-event', 'FrontendController@newsevent')
+		->name('newsevent');
+	Route::get('/news-event/{slug}', 'FrontendController@newseventShow')
+		->name('newsevent.show');
+	Route::post('/news-event/calldata', 'FrontendController@newseventData')
+		->name('newsevent.data');
+
+	Route::get('/sdg-and-politics', 'FrontendController@politic')
+		->name('politic');
+	Route::get('/sdg-and-politics/{slug}', 'FrontendController@politicShow')
+		->name('politic.show');
+	Route::post('/sdg-and-politics/calldata', 'FrontendController@politicData')
+		->name('politic.data');
+	
+	Route::get('/about', 'FrontendController@about')
+		->name('about');
+	Route::get('/contact', 'FrontendController@contact')
+		->name('contact');
+
+	Route::post('/comments', 'FrontendController@comments')
+		->name('comments');	
 });
 
 
@@ -28,13 +58,12 @@ Route::get('/test', function(){
 	return response()->json($data);
 });
 
-Route::get('/adduser', function(){
-	$data = New App\Model\Users;
-	$data->name = "Adam Surya";
-	$data->email = "dessurya02@gmail.com";
-	$data->password = Hash::make('asdasd');
+Route::get('/page', function(){
+	$data = New App\Model\ContentPage;
+	$data->title = "page6";
+	// $data->email = "dessurya02@gmail.com";
+	// $data->password = Hash::make('asdasd');
 	$data->flag_active = "Y";
-	$data->remember_token = str_random(30).time();
 	$data->save();
 	dd($data);
 });
