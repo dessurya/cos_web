@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('asset/vendors/owl-carousel/owl.theme.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('asset/vendors/owl-carousel/owl.transitions.css') }}">
 
-	<link rel="stylesheet" href="{{ asset('asset/css/main_home.css') }}">
+	<link rel="stylesheet" href="{{ asset('asset/css/main_home.css?v=2019.1') }}">
 @endsection
 
 @section('body')
@@ -40,7 +40,8 @@
 		@endforeach
 	</div>
 	@endif
-
+	
+	@if($about->flag_active == 'Y')
 	<div id="about" class="boxs">
 		<div class="wrapper">
 			<h1>About Us</h1>
@@ -49,8 +50,9 @@
 			</div>
 		</div>
 	</div>
-	
-	@if(count($politics) >= 1)
+	@endif
+
+	@if(count($politics) >= 1 and $politicp->flag_active == 'Y')
 	<div id="politics" class="boxs">
 		<div class="wrapper">
 			<h1>SDG And Politics</h1>
@@ -60,6 +62,7 @@
 				<div class="list text-left" style="background-image: url('{{ asset('asset/picture/politics/'.$list->id.'/'.$list->picture) }}');">
 					<div class="content">
 						<h2>{{ $list->title }}</h2>
+						<h5>{{ $list->subject }}</h5>
 						<p>{{ Str::words(strip_tags($list->content), 25, ' ...') }}</p>
 						<a href="">Read More ></a>
 					</div>
@@ -70,8 +73,9 @@
 	</div>
 	@endif
 
-	@if(count($circle) >= 1)
+	@if(count($circle) >= 1 and $circlep->flag_active == 'Y')
 	<div id="newsevent" class="boxs">
+		<div id="bg" style="background-image: url('{{ asset('asset/picture/page/'.$circlep->id.'/'.$circlep->picture) }}');"></div>
 		<div class="wrapper">
 			<h1>Circle</h1>
 			

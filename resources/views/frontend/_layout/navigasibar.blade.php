@@ -11,6 +11,11 @@
 						<span id="one">Circles<br>Of<br>Sustainability</span>
 						<span id="two">Circles Of Sustainability</span>
 					</div>
+					<div id="burger">
+						<div></div>
+						<div></div>
+						<div></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -22,17 +27,7 @@
 							Home
 						</a>
 					</div>
-					<div class="col">
-						<a class="{{ route::is('main.about') ? 'active' : '' }}" href="{{ route('main.about') }}">
-							About Us
-						</a>
-					</div>
 					{!! (new App\Http\Controllers\FrontendController)->navbar_static() !!}
-					<div class="col">
-						<a class="{{ route::is('main.contact') ? 'active' : '' }}" href="{{ route('main.contact') }}">
-							Contact
-						</a>
-					</div>
 				</div>
 			</div>
 		</div>

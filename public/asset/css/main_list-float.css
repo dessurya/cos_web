@@ -89,3 +89,60 @@
 	color: rgb(135, 206, 236);
 	border: 1.2px solid rgb(135, 206, 236);
 }
+
+@media screen and (max-width: 1024px){ /* tab and mobile / landscape and potrait */
+	#list-float .item .flot,
+	#list-float .item .flot.img #pict,
+	#list-float .item .flot .tab,
+	#list-float .item .flot .tab .row,
+	#list-float .item .flot .tab .row .col{
+		vertical-align: middle;
+		height: 365px;
+	}
+
+	#list-float .item .flot.img #pict #absen, 
+	#list-float .item .flot.content .tab .row .col div{
+		padding: 10px 25px;
+	}
+}
+
+@media (max-width: 528px) { /* Mobile potrait */
+	#list-float .item{
+		margin-bottom: 40px;
+	}
+	#list-float .item:last-child{
+		margin-bottom: 20px;
+	}
+	#list-float .item .flot{
+		width: 100%;
+		position: relative;
+	}
+	#list-float .item:nth-child(odd) .flot:nth-child(1),
+	#list-float .item:nth-child(odd) .flot:nth-child(2),
+	#list-float .item:nth-child(even) .flot:nth-child(1),
+	#list-float .item:nth-child(even) .flot:nth-child(2){
+		float: unset;
+	}
+	#list-float .item .flot.img #pict #absen{
+		display: none;
+	}
+	#list-float .item .flot .tab,
+	#list-float .item .flot .tab .row,
+	#list-float .item .flot .tab .row .col{
+		/*display: block;*/
+	}
+
+	#list-float .item .flot.content{
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	#list-float .item .flot.content .tab .row .col div{
+		background-color: rgba(135, 206, 236, .6);
+	}
+
+	#list-float .item .flot p{
+		font-size: 9pt;
+	}
+}

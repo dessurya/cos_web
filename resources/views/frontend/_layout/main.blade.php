@@ -13,10 +13,10 @@
   @yield('meta')
   <link rel="icon" type="image/png" href="{{ asset('asset/picture-default/cos_logo_full.png') }}" />
   <link rel="stylesheet" href="">
-  <link rel="stylesheet" href="{{ asset('asset/css/main_public.css?v=2019') }}">
+  <link rel="stylesheet" href="{{ asset('asset/css/main_public.css?v=2019.1') }}">
   
   @if(!route::is('main.home'))
-  <link rel="stylesheet" href="{{ asset('asset/css/main_sub-public.css?v=2019') }}">
+  <link rel="stylesheet" href="{{ asset('asset/css/main_sub-public.css?v=2019.1') }}">
   @endif
 
   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -29,7 +29,7 @@
   @include('frontend._layout.navigasibar')
   @yield("body")
   @include('frontend._layout.footer')
-  <script type="text/javascript" src="{{ asset('asset/js/main_public.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('asset/js/main_public.js?v=2019.1') }}"></script>
   @yield("include_js")
 </body>
 </html>

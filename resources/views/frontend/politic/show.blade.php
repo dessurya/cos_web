@@ -12,22 +12,7 @@
 
 @section('include_css')
 	<link rel="stylesheet" type="text/css" href="{{ asset('asset/vendors/baguetteBox/baguetteBox.min.css') }}">
-	<style type="text/css">
-		#galeri a{
-			text-decoration: unset;
-			margin: 0;
-			line-height: 0;
-		}
-		#galeri .img{
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-			width: 24%;
-			height: 200px;
-			display: inline-block;
-			margin: 0 auto;
-		}
-	</style>
+	<link rel="stylesheet" href="{{ asset('asset/css/main_show.css?v=2019.1') }}">
 @endsection
 
 @section('body')

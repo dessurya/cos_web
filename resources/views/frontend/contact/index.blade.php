@@ -6,7 +6,7 @@
 
 @section('meta')
 	<meta name="title" content="Contact - Circles Of Sustainability">
-	<meta name="description" content="Circles Of Sustainability">
+	<meta name="description" content="{{ Str::words(strip_tags($page->content), 20, ' ...') }}">
 	<meta name="keywords" content=""/>
 @endsection
 
@@ -30,11 +30,29 @@
 		#contact .float h1{
 			margin-bottom: 10px;
 		}
+		@media screen and (max-width: 1024px){ /* tab and mobile / landscape and potrait */
+			#contact .float{
+				float: unset;
+				width: 100%;
+			}
+			#contact .float:nth-child(1){
+				margin-bottom: 20px;
+			}
+			#contact .float:nth-child(2) .row .col{
+				padding: unset;
+			}
+			#contact .tab,
+			#contact .tab .row,
+			#contact .tab .row .col{
+				display: block;
+				height: auto;
+			}
+		}
 	</style>
 @endsection
 
 @section('body')
-	<div id="banner-head" style="background-image: url('{{ asset('asset/picture-default/banner.jpg') }}');"></div>
+	<div id="banner-head" style="background-image: url('{{ asset('asset/picture/page/'.$page->id.'/'.$page->picture) }}');"></div>
 
 	<div id="contact" class="boxs">
 		<div class="wrapper">
@@ -47,14 +65,7 @@
 					<div class="tab">
 						<div class="row">
 							<div class="col">
-								<h1>Where are We?</h1>
-								<p>Jln. MT Haryono Kav Lantai Suit</p>
-								<p>Jakarta Selatan, Indonesia</p>
-								<br><br>
-								<h1>Contact Us</h1>
-								<p>021 83000000</p>
-								<p>021 83000000</p>
-								<p>circlesofsustainability@mail.com</p>
+								{!! $page->content !!}
 							</div>
 						</div>
 					</div>

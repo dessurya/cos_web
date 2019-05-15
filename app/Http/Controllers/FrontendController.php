@@ -20,7 +20,20 @@ class FrontendController extends Controller{
 	public static function navbar_static(){
 		$html = '';
 		$routename = Route::currentRouteName();
-		if (ContentPolitics::where('flag_active', 'Y')->count() >= 1) {
+		$about = ContentPage::find(1);
+		$circle = ContentPage::find(4);
+		$politic = ContentPage::find(5);
+		$contact = ContentPage::find(6);
+		if ($about->flag_active == 'Y') {
+			if($routename == 'main.about'){ $class = 'active'; } 
+			else { $class = ''; }
+			$html .= '<div class="col">';
+			$html .= '<a class="'.$class.'" href="'. route('main.about') .'">';
+			$html .= 'About Us';
+			$html .= '</a>';
+			$html .= '</div>';
+		}
+		if (ContentPolitics::where('flag_active', 'Y')->count() >= 1 and $politic->flag_active == 'Y') {
 			if($routename == 'main.politic' or $routename == 'main.politic.show'){ $class = 'active'; } 
 			else { $class = ''; }
 			$html .= '<div class="col">';
@@ -29,7 +42,7 @@ class FrontendController extends Controller{
 			$html .= '</a>';
 			$html .= '</div>';
 		}
-		if (ContentCircle::where('flag_active', 'Y')->count() >= 1) {
+		if (ContentCircle::where('flag_active', 'Y')->count() >= 1 and $circle->flag_active == 'Y') {
 			if($routename == 'main.circle' or $routename == 'main.circle.show'){ $class = 'active'; } 
 			else { $class = ''; }
 			$html .= '<div class="col">';
@@ -38,44 +51,67 @@ class FrontendController extends Controller{
 			$html .= '</a>';
 			$html .= '</div>';
 		}
-		if (ContentNewsEvent::where('flag_active', 'Y')->count() >= 1) {
-			if($routename == 'main.newsevent' or $routename == 'main.newsevent.show'){ $class = 'active'; } 
+		if ($contact->flag_active == 'Y') {
+			if($routename == 'main.contact'){ $class = 'active'; } 
 			else { $class = ''; }
 			$html .= '<div class="col">';
-			$html .= '<a class="'.$class.'" href="'. route('main.newsevent') .'">';
-			$html .= 'News Event';
+			$html .= '<a class="'.$class.'" href="'. route('main.contact') .'">';
+			$html .= 'Contact';
 			$html .= '</a>';
 			$html .= '</div>';
 		}
+		// if (ContentNewsEvent::where('flag_active', 'Y')->count() >= 1) {
+		// 	if($routename == 'main.newsevent' or $routename == 'main.newsevent.show'){ $class = 'active'; } 
+		// 	else { $class = ''; }
+		// 	$html .= '<div class="col">';
+		// 	$html .= '<a class="'.$class.'" href="'. route('main.newsevent') .'">';
+		// 	$html .= 'News Event';
+		// 	$html .= '</a>';
+		// 	$html .= '</div>';
+		// }
 		return $html;
 	}
 
 	public function home(){
 		$about = ContentPage::find(1);
+		$politicp = ContentPage::find(5);
+		$circlep = ContentPage::find(4);
 		$banner = ContentBanner::where('flag_active', 'Y')->orderBy('created_at', 'desc')->limit(5)->get();
 		$politics = ContentPolitics::where('flag_active', 'Y')->orderBy('created_at', 'desc')->limit(3)->get();
 		$circle = ContentCircle::where('flag_active', 'Y')->orderBy('created_at', 'desc')->limit(6)->get();
 		return view('frontend.home.index', compact(
 			'about',
 			'banner',
+			'politicp',
 			'politics',
-			'circle'
+			'circle',
+			'circlep'
 		));
 	}
 
 	public function about(){
 		$about = ContentPage::find(1);
+		if ($about->flag_active == 'N') {
+			return redirect()->route('main.home');
+		}
 		$visi = ContentPage::find(2);
 		$misi = ContentPage::find(3);
 		return view('frontend.about.index', compact('about', 'visi', 'misi'));
 	}
 
 	public function contact(){
-		return view('frontend.contact.index');
+		$page = ContentPage::find(6);
+		if ($page->flag_active == 'N') {
+			return redirect()->route('main.home');
+		}
+		return view('frontend.contact.index', compact('page'));
 	}
 
 	public function circle(){
 		$page = ContentPage::find(4);
+		if ($page->flag_active == 'N') {
+			return redirect()->route('main.home');
+		}
 		$data = ContentCircle::where('flag_active', 'Y')->orderBy('created_at', 'desc')->paginate(4);
 		return view('frontend.circle.index', compact('page', 'data'));
 	}
@@ -116,6 +152,9 @@ class FrontendController extends Controller{
 
 	public function politic(){
 		$page = ContentPage::find(5);
+		if ($page->flag_active == 'N') {
+			return redirect()->route('main.home');
+		}
 		$data = ContentPolitics::where('flag_active', 'Y')->orderBy('created_at', 'desc')->paginate(4);
 		return view('frontend.politic.index', compact('data', 'page'));
 	}
@@ -153,43 +192,6 @@ class FrontendController extends Controller{
 		}
 	}
 
-    public function newsevent(){
-		$newsevent = ContentNewsEvent::where('flag_active', 'Y')->orderBy('created_at', 'desc')->paginate(4);
-		return view('frontend.newsevent.index', compact('newsevent'));
-	}
-
-	public function newseventData(request $req){
-		$newsevent = ContentNewsEvent::where('flag_active', 'Y')->orderBy('created_at', 'desc')->paginate(4);
-		$view = "";
-		foreach ($newsevent as $list) {
-			$view .= '<div class="item">';
-			$view .= '<div class="flot img">';
-			$view .= '<div id="pict" style="background-image: url('.asset('asset/picture/news-event/'.$list->id.'/'.$list->picture).');">';
-			$view .= '<div class="tab">';
-			$view .= '<div class="row">';
-			$view .= '<div class="col">';
-			$view .= '<div id="absen"></div>';
-			$view .= '</div></div></div></div></div>';
-			$view .= '<div class="flot content"><div class="tab"><div class="row"><div class="col">';
-			$view .= '<div>';
-			$view .= '<h1>'.$list->title.'</h1>';
-			$view .= '<p>'.Str::words(strip_tags($list->content), 65, ' ...').'</p>';
-			$view .= '<a class="links" href="'.route('main.newsevent.show', ['slug' => $list->slug]).'">View More</a>';
-			$view .= '</div></div></div></div></div>';
-			$view .= '<div class="clearfix"></div></div>';
-		}
-		return response()->json(['html'=>$view]);		
-	}
-
-	public function newseventShow($slug){
-		$newsevent = ContentNewsEvent::where('flag_active', 'Y')->where('slug', $slug)->first();
-		if($newsevent){
-			return view('frontend.newsevent.show', compact('newsevent'));
-		}else{
-			return redirect()->route('main.home');
-		}
-	}
-
 	public function comments(request $request){
 		$message = [];
 
@@ -213,4 +215,41 @@ class FrontendController extends Controller{
 
 		return back();
 	}
+
+	// public function newsevent(){
+	// 	$newsevent = ContentNewsEvent::where('flag_active', 'Y')->orderBy('created_at', 'desc')->paginate(4);
+	// 	return view('frontend.newsevent.index', compact('newsevent'));
+	// }
+
+	// public function newseventData(request $req){
+	// 	$newsevent = ContentNewsEvent::where('flag_active', 'Y')->orderBy('created_at', 'desc')->paginate(4);
+	// 	$view = "";
+	// 	foreach ($newsevent as $list) {
+	// 		$view .= '<div class="item">';
+	// 		$view .= '<div class="flot img">';
+	// 		$view .= '<div id="pict" style="background-image: url('.asset('asset/picture/news-event/'.$list->id.'/'.$list->picture).');">';
+	// 		$view .= '<div class="tab">';
+	// 		$view .= '<div class="row">';
+	// 		$view .= '<div class="col">';
+	// 		$view .= '<div id="absen"></div>';
+	// 		$view .= '</div></div></div></div></div>';
+	// 		$view .= '<div class="flot content"><div class="tab"><div class="row"><div class="col">';
+	// 		$view .= '<div>';
+	// 		$view .= '<h1>'.$list->title.'</h1>';
+	// 		$view .= '<p>'.Str::words(strip_tags($list->content), 65, ' ...').'</p>';
+	// 		$view .= '<a class="links" href="'.route('main.newsevent.show', ['slug' => $list->slug]).'">View More</a>';
+	// 		$view .= '</div></div></div></div></div>';
+	// 		$view .= '<div class="clearfix"></div></div>';
+	// 	}
+	// 	return response()->json(['html'=>$view]);		
+	// }
+
+	// public function newseventShow($slug){
+	// 	$newsevent = ContentNewsEvent::where('flag_active', 'Y')->where('slug', $slug)->first();
+	// 	if($newsevent){
+	// 		return view('frontend.newsevent.show', compact('newsevent'));
+	// 	}else{
+	// 		return redirect()->route('main.home');
+	// 	}
+	// }
 }

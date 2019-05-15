@@ -11,7 +11,7 @@
 @endsection
 
 @section('include_css')
-	<link rel="stylesheet" href="{{ asset('asset/css/main_list-float.css') }}">
+	<link rel="stylesheet" href="{{ asset('asset/css/main_list-float.css?v=2019.1') }}">
 @endsection
 
 @section('body')

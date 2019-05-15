@@ -1,4 +1,5 @@
 <div id="footer">
+	<!--  
 	<div class="wrap">
 		<div class="tab">
 			<div class="row">
@@ -40,6 +41,7 @@
 			</div>
 		</div>
 	</div>
+	-->
 	<div class="wrap">
 		<div id="copyright" class="tab">
 			<div class="row">

@@ -26,6 +26,7 @@
 		}
 	/* Handle */
 /* scroller */
+
 /* public */
 	body{
 		font-family: 'Kanit', sans-serif;
@@ -210,7 +211,7 @@
 
 /* footer */
 	#footer{
-		padding: 40px 0 0;
+		/*padding: 40px 0 0;*/
 		background-color: rgb(135, 206, 236);
 	}
 	#footer p, #footer h2, #footer a{
@@ -291,3 +292,138 @@
 		top: 4px;
 	}
 /* footer */
+
+@media screen and (max-width: 1024px){ /* tab and mobile / landscape and potrait */
+	h1{
+		font-size: 26pt;
+	}
+	h2{
+		font-size: 24pt;
+	}
+	h3{
+		font-size: 16pt;
+	}
+
+	.btn-dft{
+		padding: 3px 10px;
+	}
+
+	.boxs{
+		padding: 20px 0;
+	}
+
+	#navigasi #absen{
+		height: 80px;
+		width: 100%;
+		background-color: rgba(135, 206, 236, .6);
+		transition: all 1.51s;
+	}
+
+	#navigasi #wrapper #list{
+		transform: translateX(-100vw);
+		transition: all 1.51s;
+	}
+
+	#navigasi.active #wrapper #list{
+		transform: translateX(0vw);
+	}
+
+	#navigasi.active #absen{
+		/*background-color: rgba(135, 206, 236, 1);*/
+		height: 270px;
+	}
+
+	#navigasi #wrapper{
+		width: 85%;
+	}
+
+	#navigasi #wrapper .tab .row .col{
+		height: 70px;
+	}
+
+	#navigasi #wrapper #logo,
+	#navigasi #wrapper #list{
+		float: unset;
+	}
+
+	#navigasi #wrapper #logo img{
+		height: 80px;
+	}
+
+	#navigasi .title span#one{
+		display: none;
+	}
+	#navigasi .title span#two{
+		display: block;
+	}
+
+	#navigasi #wrapper #list .tab,
+	#navigasi #wrapper #list .tab .row,
+	#navigasi #wrapper #list .tab .row .col{
+		display: block;
+	}
+	#navigasi #wrapper #list .tab .row .col{
+		height: 35px;
+	}
+
+	#navigasi #logo #burger{
+		position: absolute;
+		background-color: rgba(0,0,0,0);
+		border: .5px solid rgb(145, 209, 235);
+		border-radius: 5px;
+		padding: 5px;
+		right: 0px;
+		top: 20px;
+		z-index: 20;
+		transition: all 1.51s;
+	}
+	#navigasi #logo #burger div{
+		width: 30px;
+		height: 5px;
+		margin: 3px 0;
+		background-color: rgb(145, 209, 235);
+		border-radius: 5px;
+		transition: all 1.51s;
+	}
+}
+
+@media (max-width: 528px) { /* Mobile potrait */
+
+	#navigasi #wrapper{
+		width: 95%;
+		height: 80px;
+	}
+	#navigasi #wrapper .tab .row .col{
+		padding: unset;
+	}
+	#navigasi .title{
+		font-size: 14pt;
+	}
+	#navigasi a{
+		font-size: 12pt;
+	}
+	#navigasi.active #wrapper #list{
+		transform: translateX(10vw);
+	}
+
+	#footer .wrap{
+		text-align: center;
+		padding: 10px 0;
+		width: 80%;
+	}
+
+	#footer .wrap #copyright.tab{
+		margin: unset;
+	}
+
+	#footer .wrap #copyright.tab
+	#footer .wrap #copyright.tab .row,
+	#footer .wrap #copyright.tab .row .col{
+		display: block;
+	}
+
+	#footer .wrap #copyright.tab .row .col{
+		height: 25px;
+		padding: unset;
+	}
+}

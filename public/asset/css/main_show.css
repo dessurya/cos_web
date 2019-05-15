@@ -1,0 +1,21 @@
+#galeri a{
+	text-decoration: unset;
+	margin: 0;
+	line-height: 0;
+}
+#galeri .img{
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 24%;
+	height: 200px;
+	display: inline-block;
+	margin: 0 auto;
+}
+
+@media screen and (max-width: 812px) { /* Mobile landscape */
+	#galeri .img{
+		width: 31%;
+		height: 70px;
+	}
+}

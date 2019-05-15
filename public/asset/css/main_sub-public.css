@@ -79,3 +79,16 @@
 #comments .list .persone h4.right{
 	padding-right: 5%;
 }
+
+@media screen and (max-width: 1024px){ /* tab and mobile / landscape and potrait */
+	#banner-head{
+		height: 500px;
+	}
+}
+
+@media (max-width: 528px) { /* Mobile potrait */
+	#banner-head{
+		margin-top: 80px;
+		height: 250px;
+	}
+}

@@ -116,6 +116,16 @@
 /* politics */
 
 /* newsevent */
+	#newsevent #bg{
+		position: absolute;
+		width: 100%;
+		height: 540px;
+		top: 160px;
+		opacity: .8;
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
 	#newsevent #lists{
 		position: relative;
 		width: 100%;
@@ -152,3 +162,83 @@
 		text-decoration: unset;
 	}
 /* newsevent */
+
+@media screen and (max-width: 1024px){ /* tab and mobile / landscape and potrait */
+	/* banner */
+		#banner .item #img{
+			height: 480px;
+		}
+
+		#banner .item #img #wrapper{
+			width: 300px;
+			bottom: 60px;
+			right: 50px;
+		}
+
+		#banner .item #img #wrapper h1{
+			margin-bottom: 15px;
+		}
+
+		#banner .item #img #wrapper #link{
+			margin-top: 10px;
+		}
+	/* banner */
+
+	/* politics */
+		#politics #lists .list .content{
+			width: 65%;
+		}
+	/* politics */
+
+	/* newsevent */
+		#newsevent #bg{
+			height: 365px;
+		}
+		#newsevent #lists .list .img{
+			height: 180px;
+			width: 180px;
+		}
+	/* newsevent */
+}
+
+@media screen and (max-width: 812px) and (min-width: 528px) { /* Mobile landscape */
+	#banner .item #img{
+		height: 400px;
+	}
+
+	#newsevent #lists .list .img{
+		height: 160px;
+		width: 160px;
+	}
+}
+
+@media (max-width: 528px) { /* Mobile potrait */
+	#banner .item #img{
+		height: 360px;
+	}
+	
+	#banner .item #img #wrapper p{
+		font-size: 10pt;
+	}
+
+	#banner .item #img #wrapper #link a.links{
+		padding: 3px 10px;
+		font-size: 10pt;
+	}
+
+	#politics #lists .list .content{
+		background-color: rgba(255,255,255,.8);
+	}
+
+	#newsevent #bg{
+		height: 0;
+		display: none;
+	}
+
+	#newsevent #lists .list{
+		display: block;
+		width: 100%;
+		margin: 0 auto;
+		margin-bottom: 10px;
+	}
+}
